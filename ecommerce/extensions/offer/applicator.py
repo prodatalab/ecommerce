@@ -1,7 +1,6 @@
 import logging
 from itertools import chain
 
-import waffle
 from oscar.apps.offer.applicator import Applicator
 from oscar.core.loading import get_model
 

@@ -1,8 +1,6 @@
 import mock
 from oscar.core.loading import get_model
 from oscar.test import factories
-from testfixtures import LogCapture
-from waffle.testutils import override_flag
 
 from ecommerce.extensions.offer.applicator import CustomApplicator
 from ecommerce.extensions.test.factories import ConditionalOfferFactory, ProgramOfferFactory
