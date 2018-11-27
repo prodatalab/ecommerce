@@ -19,6 +19,7 @@ from ecommerce.extensions.api.v2.views import retirement as retirement_views
 from ecommerce.extensions.api.v2.views import sdn as sdn_views
 from ecommerce.extensions.api.v2.views import stockrecords as stockrecords_views
 from ecommerce.extensions.api.v2.views import vouchers as voucher_views
+from ecommerce.extensions.api.v2.views import assignmentemail as assignment_email
 from ecommerce.extensions.voucher.views import CouponReportCSVView
 
 ORDER_NUMBER_PATTERN = r'(?P<number>[-\w]+)'
@@ -118,5 +119,6 @@ router.register(r'partners', partner_views.PartnerViewSet) \
 router.register(r'products', product_views.ProductViewSet, base_name='product')
 router.register(r'vouchers', voucher_views.VoucherViewSet, base_name='vouchers')
 router.register(r'stockrecords', stockrecords_views.StockRecordViewSet, base_name='stockrecords')
+router.register(r'assignmentemail', assignment_email.AssignmentEmail, base_name='assignmentemail')
 
 urlpatterns += router.urls
