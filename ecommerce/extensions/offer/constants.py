@@ -1,2 +1,0 @@
-CUSTOM_APPLICATOR_LOG_FLAG = 'enable_custom_applicator_logging'
-CUSTOM_APPLICATOR_USE_FLAG = 'enable_custom_applicator_use'

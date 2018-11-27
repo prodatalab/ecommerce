@@ -5,7 +5,6 @@ from testfixtures import LogCapture
 from waffle.testutils import override_flag
 
 from ecommerce.extensions.offer.applicator import CustomApplicator
-from ecommerce.extensions.offer.constants import CUSTOM_APPLICATOR_LOG_FLAG
 from ecommerce.extensions.test.factories import ConditionalOfferFactory, ProgramOfferFactory
 from ecommerce.tests.testcases import TestCase
 
@@ -57,43 +56,5 @@ class CustomApplicatorTests(TestCase):
         self.applicator.get_program_offers = mock.Mock()
 
         self.assert_correct_offers(site_offers)
-
-        self.assertFalse(self.applicator.get_program_offers.called)  # Verify there was no attempt to match off a bundle
-
-    @override_flag(CUSTOM_APPLICATOR_LOG_FLAG, active=True)
-    def test_log_is_fired_when_get_offers_with_bundle(self):
-        """ Verify that logs are fired when bundle id is given and offers are being applied"""
-        program_offers = [ProgramOfferFactory()]
-        bundle_id = program_offers[0].condition.program_uuid
-        self.create_bundle_attribute(bundle_id)
-
-        with LogCapture(LOGGER_NAME) as l:
-            self.assert_correct_offers(program_offers)
-            l.check(
-                (
-                    LOGGER_NAME,
-                    'WARNING',
-                    'CustomApplicator processed Basket [{}] from Request [{}] and User [{}] with a bundle.'.format(
-                        self.basket, None, self.user),
-                )
-            )
-
-    @override_flag(CUSTOM_APPLICATOR_LOG_FLAG, active=True)
-    def test_log_is_fired_when_get_offers_without_bundle(self):
-        """ Verify that logs are fired when no bundle id is given but offers are being applied"""
-        site_offers = ConditionalOfferFactory.create_batch(3)
-
-        self.applicator.get_program_offers = mock.Mock()
-
-        with LogCapture(LOGGER_NAME) as l:
-            self.assert_correct_offers(site_offers)
-            l.check(
-                (
-                    LOGGER_NAME,
-                    'WARNING',
-                    'CustomApplicator processed Basket [{}] from Request [{}] and User [{}] without a bundle.'.format(
-                        self.basket, None, self.user),
-                )
-            )
 
         self.assertFalse(self.applicator.get_program_offers.called)  # Verify there was no attempt to match off a bundle
